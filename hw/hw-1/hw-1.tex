@@ -1,0 +1,102 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage[bottom]{footmisc}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{titlesec}
+\usepackage{booktabs}
+
+
+\titleformat{\subsubsection}[runin]{}{}{}{}[]
+
+\title{\textbf{Advanced Machine Learning -- Homework 1}}
+\author{Anna Berger, Ashwin Sadananda Bhat (AML23)}
+
+ 
+\begin{document}
+
+
+\maketitle
+\section*{Exercise 1}
+
+\subsection*{Part a}
+
+From the graph given in the exercise we can write the joint distribution of five variables as follows:
+
+$$ P(C,D,I,G,S) = P(C) \cdot  P(D|C)\cdot  P(I|D) \cdot  P(G|D,I) \cdot  P(S|I) $$ 
+
+In order to find $P(G)$, we marginalise over all the other variables:
+
+$$ P(G) = \sum_{C, D, I, S} P(C) \cdot  P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I) $$ 
+
+Rearranging the summations, we get the following equation which is easier to compute:
+$$ P(G) = \sum_{D, I} P(G|D,I)\cdot P(I|D) \sum_{S} P(S | I)  \sum_{C} P(C) \cdot  P(D|C) $$ 
+
+
+I WILL FINISH THIS PART LATER
+
+\subsection*{Part b:}
+
+$$ P(C,D,I,G,S) = P(C)\cdot P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I) $$
+$$  P(S|C = c_0) = \frac{P(S, C = c_0)}{P(C = c_0)} =  \frac{\sum_{D,I,G} P(C = c_0,D,I,G,S)}{P(C = c_0)} $$
+
+$$ P(S|C = c_0) =  \frac{\sum_{D,I,G} P(C = c_0)\cdot P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I)}{P(C = c_0)} $$ 
+
+$$ P(S|C = c_0)  = \sum_{D,I,G} P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I) = $$
+
+$$ P(S|C = c_0)  = \sum_{D} P(D|C) \cdot  \sum_{I}P(I|D)\cdot P(S|I) \cdot \sum_{G}P(G|D,I)  \label{eq:1.1} $$
+
+As $ \sum_{G}P(G|D,I) = 1$, then we are left to compute:
+
+$$ P(S|C) = \sum_{D} P(D|C) \cdot  \sum_{I}P(I|D)\cdot P(S|I)$$
+
+Let $ f_I(S,D) = \sum_{I}P(I|D)\cdot P(S|I)$, then:
+
+
+$$ P(S|C) = \sum_{D}P(D|C) \cdot  f_I(S,D) $$
+
+
+$$ f_I(s_0,d_0) = \sum_{I}P(I|d_0)\cdot P(s_0|I) = [P(i_0|d_0) \cdot  P(s_0|i_0)] + [P(i_1|d_0) \cdot  P(s_0|i_1)] $$
+$$ = [0.6\cdot 0.2] + [0.4\cdot 0.7] = 0.4 $$
+
+$$ f_I(s_0,d_1) = \sum_{I}P(I|d_1)\cdot P(s_0|I) = [P(i_0|d_1) \cdot  P(s_0|i_0)] + [P(i_1|d_1) \cdot  P(s_0|i_1)] $$
+$$ = [0.9\cdot 0.2] + [0.1\cdot 0.7] = 0.25 $$
+
+$$ f_I(s_1,d_0) = \sum_{I}P(I|d_0)\cdot P(s_1|I)
+ = [P(i_0|d_0) \cdot  P(s_1|i_0)] + [P(i_1|d_0) \cdot P(s_1|i_1)] $$
+$$ = [0.6\cdot 0.8] + [0.4\cdot 0.3] = 0.6 $$
+
+$$ f_I(s_0,d_1) = \sum_{I}P(I|d_1)\cdot P(s_0|I)
+ = [P(i_0|d_1) \cdot  P(s_0|i_0)] + [P(i_1|d_1) \cdot P(s_0|i_1)] $$
+$$ = [0.9\cdot 0.8] + [0.1\cdot 0.3] = 0.75 $$
+
+Now we have everything to compute $P(S|C)$:
+$$ P(S=s_0|C=c_0) = \sum_{D}P(D|C=c_0)\cdot f_I(S=s_0,D) =
+ $$ $$ = [P(d_0|c_0)\cdot f_I(s_0,d_0)] + [P(d_1|c_0)\cdot f_I(s_0,d_1)] = [0.1\cdot 0.4]+[0.9\cdot 0.25] = 0.265 $$
+
+$$ P(S=s_0|C=c_0) = \sum_{D}P(D|C=c_0)\cdot f_I(S=s_1,D) =
+ $$ $$ = [P(d_0|c_0)\cdot f_I(s_1,d_0)] + [P(d_1|c_0)\cdot f_I(s_1,d_1)]  = [0.1\cdot 0.6]+[0.9\cdot 0.75] = 0.735 $$
+
+Therefore, 
+\begin{center}
+	\begin{tabular}{r | ll}
+		\toprule
+		$S|C=c_0$ & $s_0$ & $s_1$ \\
+		\midrule
+		$ p $ &  0.265 & 0.735 \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+% $\therefore P(S|C=c_0) = 0.265(for S=s_0), 0.735(for S=s_1)$
+
+
+
+\end{document}
