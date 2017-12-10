@@ -82,7 +82,7 @@
 	$$ P(C,D,I,G,S) = P(C)\cdot P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I) $$
 	
 	Then we apply the Bayes rule and marginalise out  $P(S , c_0):$
-	$$  P(S|c_0) = \frac{P(S, c_0)}{P( c_0)} =  \frac{\sum_{D,I,G} P(C = c_0,D,I,G,S)}{P(C = c_0)} $$
+	$$  P(S|c_0) = \frac{P(S, c_0)}{P( c_0)} =  \frac{\sum_{D,I,G} P(c_0,D,I,G,S)}{P(c_0)} $$
 	
 	
 	$$ P(S|c_0) =  \frac{\sum_{D,I,G} P(c_0)\cdot P(D|C)\cdot P(I|D)\cdot P(G|D,I)\cdot P(S|I)}{P(c_0)} $$ 
@@ -125,7 +125,7 @@
 	First we apply the Bayes rule to compute the conditional probability distribution:
 	$$ P(D | g_2) = \frac{P(D, g_2)}{P(g_2)} $$
 	
-	In \textbf{Part a} we already computed $P(g_2) = 0.3736. $
+	In \textbf{Part a} we have already computed $P(g_2) = 0.3736. $
 	
 	We marginalise over all other variables to obtain $P(D , g_2)$ and group sums:
 	
@@ -248,13 +248,13 @@
 		$= 10 (4560 \cdot 32 + 1440 \cdot 16) = 1689600$
 	\end{itemize}
 	
-	Therefore, $$ \Phi(S | c_1) = (710400, 1689600). $$
+	Therefore, $$ \Phi(S | c_1) \approx (710400, 1689600). $$
 	
 	\subsection*{Part c}
 	$$ \Phi(D, g_2) = \Phi(D, g_2).$$
 	Marginalising over all variables except D and G, we get:
-	$$ \Phi(D, g_2) = \sum_{C,I,S}\Phi(C) \cdot \Phi(C,D) \cdot \Phi(D,I) \cdot \Phi(D,I,g_2) \cdot \Phi(I,S) $$
-	We re-arrange the sums to make computations easier again:
+	$$ \Phi(D, g_2) = \sum_{C,I,S}\Phi(C) \cdot \Phi(C,D) \cdot \Phi(D,I) \cdot \Phi(D,I,g_2) \cdot \Phi(S, I) $$
+	We rearrange the sums to make computations easier again:
 	$$ \Phi(D, g_2) = \sum_{C}\Phi(C) \cdot \Phi(C,D) \sum_{I}\cdot \Phi(D,I) \cdot \Phi(D,I,g_2) \cdot \sum_{S}\Phi(S, I) $$
 	
 	First we compute $f_S(I) = \sum_{S}\Phi(S,I) $:   
@@ -288,7 +288,7 @@
 	$$ P(D | g_2) = \left(\frac{\Phi(d_0 | g_2)}{\sum_{D}\Phi(D | g_2)}, \frac{\Phi(d_1 | g_2)}{\sum_{D}\Phi(D | g_2)}\right) = \left(\frac{1016160}{1016160+506160},\frac{506160}{1016160+506160}\right) $$
 	
 	So,
-	$$ P(D | g_2) = (0.67,0.33) $$
+	$$ P(D | g_2) \approx (0.67,0.33) $$
 	
 \section*{Exercise 3}
 
@@ -411,7 +411,7 @@ The sequence of messages, propagated through the network, is as follows (you can
 	$$ P(D | g_2) = \left(\frac{\Phi(d_0 | g_2)}{\sum_{D}\Phi(D | g_2)}, \frac{\Phi(d_1 | g_2)}{\sum_{D}\Phi(D | g_2)}\right) = \left(\frac{1016160}{1016160+506160},\frac{506160}{1016160+506160}\right) $$
 	
 	So,
-	$$ P(D | g_2) = (0.67,0.33) $$
+	$$ P(D | g_2) \approx (0.67,0.33) $$
 	
 	
 	
