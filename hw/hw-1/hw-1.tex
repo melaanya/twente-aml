@@ -164,6 +164,15 @@
 	
 	\newpage
 	\section*{Exercise 2}
+	
+	In Exercise 2 we use the factor graph from the Figure \ref{fig:fgraph_2}. Although it has cycles in it, we can use it as it doesn't create any difficulties for approach with direct marginalization. However, for Exercise 3 this graph is inapplicable: as it has a cycle and the sum-product algorithm won't work properly with it.
+
+	\begin{figure}[H]
+		\centering{\includegraphics[height =10cm]{figures/fgraph_2.jpg}}
+		\caption{Factor graph for Exercise 2}
+		\label{fig:fgraph_2}
+	\end{figure}
+	
 	\subsection*{Part a:}
 	From the graph we can obtain the following equation for factors:
 	$$\Phi(C,D,I,G,S) = \Phi(C) \cdot \Phi(C,D) \cdot \Phi(D,I) \cdot \Phi(D,I,G) \cdot \Phi(I,S)$$
