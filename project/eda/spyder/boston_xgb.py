@@ -34,7 +34,7 @@ df_train, df_test, y_train, y_test = train_test_split(train, train.medv, test_si
 
 dtrain = pd.get_dummies(df_train, columns= ['chas'])
 
-xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor())])
+xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
 
 #def crossvalidation(xgboost_clf, dtrain, y_train):
 cv = cross_val_score(xgboost_clf, dtrain, y_train, scoring='neg_mean_squared_error', cv=10, verbose=True)
