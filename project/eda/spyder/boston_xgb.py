@@ -2,13 +2,14 @@
 """
 Created on Tue Jan 16 16:45:00 2018
 
-@author: ashwi
+@author: ashwin
 """
 
 import xgboost as xgb
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_squared_error
+import time
+
 from sklearn.model_selection import cross_val_score, train_test_split
 from mlxtend.preprocessing import DenseTransformer
 from sklearn.pipeline import Pipeline
@@ -36,12 +37,12 @@ dtrain = pd.get_dummies(df_train, columns= ['chas'])
 
 xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
 
-#def crossvalidation(xgboost_clf, dtrain, y_train):
+start = time.time()
+#for i in range(0,5):
 cv = cross_val_score(xgboost_clf, dtrain, y_train, scoring='neg_mean_squared_error', cv=10, verbose=True)
-#    return cv
-
-#if __name__ == '__main__':
-#cv = crossvalidation(xgboost_clf, dtrain, y_train)
+end = time.time()
 rmse = np.sqrt(-cv.mean())
 
-print (rmse)
+print ('RMSE (XGBRegressor) = {0}'.format(rmse))
+print ("time: "+ str(end - start))
+#print ("time: "+ str((end - start)/5))

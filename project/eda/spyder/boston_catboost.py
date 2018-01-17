@@ -2,7 +2,7 @@
 """
 Created on Tue Jan 16 14:53:08 2018
 
-@author: ashwi
+@author: ashwin
 """
 
 import catboost
@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import time
 
 from catboost import Pool, CatBoostRegressor, CatBoostClassifier, cv
 from matplotlib.backends.backend_pdf import PdfPages
@@ -36,26 +37,23 @@ y_price = np.log1p(df_train.medv)
 
 X_train, X_val, y_train, y_val = train_test_split(df_train, y_price, test_size=0.2)
 
-print (X_train.shape, y_train.shape)
-print (X_val.shape, y_val.shape)
-
-#4
-
-
 train_pool = Pool(X_train, y_train, cat_features= [3])
 val_pool = Pool(X_val, cat_features=[3])
 test_pool = Pool(df_test, cat_features=[3])
 
-
-
 # specify the training parameters 
 boston_model = CatBoostRegressor(learning_rate = 0.1, loss_function = 'RMSE', custom_metric = 'RMSE',  eval_metric = 'RMSE', calc_feature_importance = True)
 
-
 params = {'iterations':1000, 'depth': 5, 'loss_function': 'RMSE', 'custom_metric': 'RMSE', 'eval_metric': 'RMSE', 'logging_level': 'Verbose'}
+start = time.time()
+#for i in range(0,5):
 scores = cv(params, train_pool, fold_count=5)
-print (len(scores['RMSE_test_avg']))
-print (scores['RMSE_test_avg'][-2])
+end = time.time()
+
+
+print ('RMSE (CatBoostRegressor) = {0}'.format(scores['RMSE_test_avg'][-2]))
+print ("time: "+ str(end - start))
+#print ("time: "+ str((end - start)/5))
 
 
 
