@@ -41,32 +41,38 @@ def defaultWithCatVars(df_train, df_test, y_train, y_test):
 
     xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
 
-    start = time.time()
+    time_sum = 0.0
     for i in range(0,5):
-        cv = cross_val_score(xgboost_clf, dtrain, y_train, scoring='neg_mean_squared_error', cv=10, verbose=True)
-    end = time.time()
+        start = time.time()
+        cv = cross_val_score(xgboost_clf, df_train, y_train, scoring='neg_mean_squared_error', cv=5)
+        end = time.time()
+        time_sum += end-start
     rmse = np.sqrt(-cv.mean())
 
     print ('RMSE (XGBRegressor) = {0}'.format(rmse))
     #print ("time: "+ str(end - start))
-    print ("time: "+ str((end - start)/5))
+    print ("time: "+ str(time_sum/5))
 
 
-def defaultWithoutCatVars(df_train, df_test, y_train, y_test):
-    
-    df_train = df_train.drop(['chas'], axis = 1)
-    
-    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
-
-    start = time.time()
-    for i in range(0,5):
-        cv = cross_val_score(xgboost_clf, df_train, y_train, scoring='neg_mean_squared_error', cv=10, verbose=True)
-    end = time.time()
-    rmse = np.sqrt(-cv.mean())
-
-    print ('RMSE (XGBRegressor) = {0}'.format(rmse))
-    #print ("time: "+ str(end - start))
-    print ("time: "+ str((end - start)/5))
+# =============================================================================
+# def defaultWithoutCatVars(df_train, df_test, y_train, y_test):
+#     
+#     df_train = df_train.drop(['chas'], axis = 1)
+#     
+#     xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
+# 
+#     time_sum = 0
+#     for i in range(0,5):
+#         start = time.time()
+#         cv = cross_val_score(xgboost_clf, df_train, y_train, scoring='neg_mean_squared_error', cv=5)
+#         end = time.time()
+#         time_sum += end-start
+#     rmse = np.sqrt(-cv.mean())
+# 
+#     print ('RMSE (XGBRegressor) = {0}'.format(rmse))
+#     #print ("time: "+ str(end - start))
+#     print ("time: "+ str(time_sum/5))
+# =============================================================================
     
 
 defaultWithCatVars(df_train, df_test, y_train, y_test)
