@@ -1,0 +1,32 @@
+\documentclass[aspectratio=169,usenames,dvipsnames]{beamer}
+\usetheme{metropolis}
+
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{tabularx}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\setbeamercovered{transparent}
+
+\makeatletter
+\newlength\beamerleftmargin
+\setlength\beamerleftmargin{\Gm@lmargin}
+\makeatother
+
+\title{CatBoost applicability in regression problems}
+\date{\today}
+\author{Anna Berger, Ashwin Sadananda Bhat}
+
+\begin{document}
+  \maketitle
+  \input{10-introduction}
+  \input{20-methodology}
+  \input{30-results}
+  \input{40-conclusion}
+\end{document}
