@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan 17 13:37:47 2018
+Created on Mon Jan 22 20:41:42 2018
 
 @author: ashwin
 """
 
+
 import numpy as np
 import pandas as pd
 import time
+import lightgbm as lgb
 
 from sklearn.model_selection import cross_val_score, train_test_split
 from mlxtend.preprocessing import DenseTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.preprocessing import Imputer
+from sklearn.preprocessing import Imputer, LabelEncoder
 
 
 
@@ -24,18 +26,21 @@ y_price = np.log1p(train.medv)
 
 df_train, df_test, y_train, y_test = train_test_split(train, y_price, test_size = 0.2, shuffle = True)
 
+#gbm = lgb.LGBMRegressor(objective='regression', num_leaves=31, learning_rate=0.05, n_estimators=20)
+
+
 def defaultWithCatVars(df_train, df_test, y_train, y_test):
 
-    dtrain = pd.get_dummies(df_train, columns= ['chas'])
+    df_train['chas'] = df_train['chas'].apply(LabelEncoder().fit_transform)
     
-    sk_boost_clf = Pipeline([('replace_nan', Imputer()), ('to_dense', DenseTransformer()), ('clf', GradientBoostingRegressor())])
+    gbm = lgb.LGBMRegressor(objective='regression')
     
     start = time.time()
     for i in range(0,5):
-        sklearn_cv = cross_val_score(sk_boost_clf, dtrain, y_train, scoring='neg_mean_squared_error', cv=3, verbose=True)
+        lgb_cv = cross_val_score(gbm, df_train, y_train, scoring='neg_mean_squared_error', cv=5, verbose=True)
     end = time.time()
     
-    print('RMSE (GradientBoostingRegressor) = {0}'.format(np.sqrt(-sklearn_cv.mean())))
+    print('RMSLE (LightGBM) = {0}'.format(lgb_cv['RMSE_test_avg'][-1])) 
     #print ("time: "+ str(end - start))
     print ("time: " + str((end - start)/5))
 
@@ -43,16 +48,16 @@ def defaultWithCatVars(df_train, df_test, y_train, y_test):
 
 def defaultWithoutCatVars(df_train, df_test, y_train, y_test):
 
-    dtrain = df_train.drop(['chas'], axis = 1)
+    df_train = df_train.drop(['chas'], axis = 1)
     
-    sk_boost_clf = Pipeline([('replace_nan', Imputer()), ('to_dense', DenseTransformer()), ('clf', GradientBoostingRegressor())])
+    gbm = lgb.LGBMRegressor(objective='regression')
     
     start = time.time()
     for i in range(0,5):
-        sklearn_cv = cross_val_score(sk_boost_clf, dtrain, y_train, scoring='neg_mean_squared_error', cv=3, verbose=True)
+        lgb_cv = cross_val_score(gbm, df_train, y_train, scoring='neg_mean_squared_error', cv=5, verbose=True)
     end = time.time()
-    
-    print('RMSE (GradientBoostingRegressor) = {0}'.format(np.sqrt(-sklearn_cv.mean())))
+    rmse = np.sqrt(-lgb_cv.mean())
+    print('RMSLE (LightGBM) = {0}'.format(rmse)) 
     #print ("time: "+ str(end - start))
     print ("time: " + str((end - start)/5))
     
