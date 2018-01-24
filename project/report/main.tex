@@ -1,0 +1,48 @@
+\documentclass[format=acmsmall, review=false, screen=true]{acmart}
+
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs} % For formal tables
+\usepackage{subcaption}
+\usepackage[capitalise, noabbrev]{cleveref}
+
+\newtheorem{exmp}{Example}[section]
+
+% Copyright
+\setcopyright{none}
+
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\pagestyle{plain} % removes running headers
+
+\begin{document}
+\title{CatBoost applicability in regression problems}
+
+\author{Anna Berger}
+\email{a.berger@student.utwente.nl}
+
+\author{Ashwin Sadananda Bhat}
+\email{a.sadanandabhat@student.utwente.nl}
+
+
+% The default list of authors is too long for headers.
+
+\input{01-abstract}
+
+\maketitle
+\thispagestyle{plain}
+
+
+\input{10-introduction}
+\input{20-related-work}
+\input{30-data}
+\input{40-methodology}
+\input{50-results}
+\input{60-discussion}
+\input{70-conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{bibliography} 
+
+\input{99-appendix}
+
+\end{document}
