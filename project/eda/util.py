@@ -36,7 +36,7 @@ def crossvaltest(params, train_set, train_label, cat_dims, n_splits=3):
         clf = CatBoostRegressor(**params)
         clf.fit(train, np.ravel(labels), cat_features=cat_dims)
 
-        res.append(np.sqrt(mean_squared_error(np.ravel(test_labels), clf.predict(test))))
+        res.append(-np.sqrt(mean_squared_error(np.ravel(test_labels), clf.predict(test))))
     return np.mean(res)
 
 def catboost_param_tune(params, train_set, train_label,cat_dims=None,n_splits=3):
