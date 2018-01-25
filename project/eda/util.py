@@ -23,6 +23,8 @@ def plot_top_features(model, feature_names, num):
 def crossvaltest(params, train_set, train_label, cat_dims, n_splits=3):
     kf = KFold(n_splits=n_splits, shuffle=True) 
     params['logging_level'] = 'Silent'
+    params['loss_function'] = 'RMSE'
+    params['custom_metric'] = 'RMSE'
     res = []
     for train_index, test_index in kf.split(train_set):
         train = train_set.iloc[train_index,:]
