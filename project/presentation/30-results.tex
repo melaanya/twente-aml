@@ -7,9 +7,9 @@
 					\toprule
 					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time (tuned)} \\
 					\midrule
-					CatBoost & 0.5161 &  ---  & --- \\
+					CatBoost & 0.5161 &  0.5102  & 765.91 \\
 					XGBoost & 0.5098 & \textbf{0.5081} & 158.67 \\
-					sklearn GB & 0.5102 & 0.5091 & 148.41 \\
+					sklearn GB & 0.5102 & 0.5091 & \textbf{148.41} \\
 					\bottomrule
 				\end{tabular}
 			\end{table}
@@ -24,8 +24,8 @@
 					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time (tuned)} \\
 					\midrule
 					CatBoost & 0.1789 &  0.1435  & 58.82\\
-					XGBoost & 0.1315 & \textbf{0.1246} & \textbf{8.72} \\
-					sklearn GB & 0.1285 & 0.1241 & 10.10 \\
+					XGBoost & 0.1315 & 0.1246 & \textbf{8.72} \\
+					sklearn GB & \textbf{0.1285} & \textbf{0.1241} & 10.10 \\
 					\bottomrule
 				\end{tabular}
 			\end{table}
@@ -39,9 +39,9 @@
 					\toprule
 					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time (tuned)} \\
 					\midrule
-					CatBoost & 0.1584 &  ---  & --- \\
-					XGBoost & 0.1952 & \textbf{0.1924} & \textbf{0.75}\\
-					sklearn GB & 0.1993 & 0.1915 & 1.07 \\
+					CatBoost & \textbf{0.1584} &  \textbf{0.1423}  & 56.33 \\
+					XGBoost & 0.1952 & 0.1753 & \textbf{0.75}\\
+					sklearn GB & 0.1993 & 0.1721 & 1.07 \\
 					\bottomrule
 				\end{tabular}
 			\end{table}
@@ -56,15 +56,13 @@
 		\centering
 		\begin{tabular}{lrrr}
 			\toprule
-			\textbf{Model} & \textbf{Russia} & \textbf{Ames} & \textbf{Boston} \\
+			\textbf{Model} & \textbf{Russia (18)} & \textbf{Ames (43)} & \textbf{Boston (1)} \\
 			\midrule
-			CatBoost & ---  & 9 & --- \\
-			XGBoost & 4  & 1 & --- \\
-			sklearn & 4 & 0 & --- \\
+			CatBoost & 5& 9 & 1 \\
+			XGBoost & 1  & 1 & 0 \\
+			sklearn & 1 & 0 & 0 \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
-	
-	
 	
 \end{frame}
