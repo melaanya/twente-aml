@@ -18,10 +18,16 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.pylab import rcParams
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import cross_val_score, train_test_split
+import util
+import paramsearch
+from util import plot_top_features
+from util import plot_top_features, catboost_param_tune
 
 
 train = pd.read_csv('../data/Boston/boston-train.csv', index_col = 'ID', delimiter = ',')
 df_test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter = ',')
+
+dtrain = train.drop(['medv'], axis=1)
 
 y_price = np.log1p(train.medv)
 
@@ -33,7 +39,7 @@ y_price = np.log1p(train.medv)
 # =============================================================================
 
 
-df_train, df_val, y_train, y_val = train_test_split(train, y_price, test_size=0.2)
+df_train, df_val, y_train, y_val = train_test_split(dtrain, y_price, test_size=0.2)
 
 # =============================================================================
 # def defaultWithoutCatVars(df_train, df_val, y_train, y_val, df_test):
@@ -103,7 +109,29 @@ def defaultWithCatVars(df_train, df_val, y_train, y_val, df_test):
     #print ("time: "+ str(end - start))
     print ("time: "+ str(time_sum/5))   
 
+
+#Tuned:
+    
+def tuned(df_train, y_train):
+    train_pool = Pool(df_train, label = y_train, cat_features=[3])
+    model = CatBoostRegressor(loss_function = 'RMSE', custom_metric = 'RMSE',  calc_feature_importance = True)
+    cv_params = model.get_params()
+    del cv_params['calc_feature_importance']
+    
+    model.fit(train_pool, logging_level='Silent')
+    plot_top_features(model, train_pool.get_feature_names(), 20)
+    
+    cat_grid_params = {
+    'depth': [1, 2, 3],
+    'learning_rate': [0.1, 0.05, 0.01],
+    'iterations' : [100, 500, 1000]
+    }
+    best_params = catboost_param_tune(cat_grid_params, df_train, y_train, [3], 5)
+
+
+#Method Calls:
+
 defaultWithCatVars(df_train, df_val, y_train, y_val, df_test)
 #defaultWithoutCatVars(df_train, df_val, y_train, y_val, df_test)
-#TUNED
+
 

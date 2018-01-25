@@ -334,3 +334,5 @@ venv.bak/
 # End of https://www.gitignore.io/api/latex,python
 project/eda/data/Boston/boston-test.csv
 project/eda/data/Boston/boston-train.csv
+project/eda/spyder/paramsearch.py
+project/eda/spyder/util.py

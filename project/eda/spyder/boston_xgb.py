@@ -10,9 +10,12 @@ import numpy as np
 import pandas as pd
 import time
 
-from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV
 from mlxtend.preprocessing import DenseTransformer
 from sklearn.pipeline import Pipeline
+import util
+import paramsearch
+from util import plot_top_features
 
 
 
@@ -33,11 +36,11 @@ test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter
 
 y_price = np.log1p(train.medv)
 
-df_train, df_test, y_train, y_test = train_test_split(train, y_price, test_size = 0.2, shuffle = True)
+dtrain = train.drop(['medv'], axis = 1)
+
+df_train, df_test, y_train, y_test = train_test_split(dtrain, y_price, test_size = 0.2, shuffle = True)
 
 def defaultWithCatVars(df_train, df_test, y_train, y_test):
-
-    dtrain = pd.get_dummies(df_train, columns= ['chas'])
 
     xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
 
@@ -75,6 +78,29 @@ def defaultWithCatVars(df_train, df_test, y_train, y_test):
 # =============================================================================
     
 
-defaultWithCatVars(df_train, df_test, y_train, y_test)
-#defaultWithoutCatVars(df_train, df_test, y_train, y_test)
 
+def tuned(df_train, df_test, y_train, y_test, n_folds=5):
+    grid_params = {
+        'clf__max_depth': [1, 2, 3],
+        'clf__learning_rate': [0.1, 0.05, 0.01],
+        'clf__n_estimators' : [100, 500, 1000]
+    }
+    
+    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
+    xgboost_clf.fit(df_train, y_train)
+    
+    plot_top_features(xgboost_clf.named_steps['clf'], df_train.columns.values, 20)
+    
+    grid_search_xgb = GridSearchCV(xgboost_clf, grid_params, scoring='neg_mean_squared_error', cv=n_folds, verbose=True)
+    grid_search_xgb.fit(df_train, y_train)
+    
+    best_parameters_xgb = max(grid_search_xgb.grid_scores_, key=lambda x: x[1])[0]
+    
+    print (best_parameters_xgb)
+
+
+#### Method Calls:
+
+#defaultWithCatVars(df_train, df_test, y_train, y_test)
+#defaultWithoutCatVars(df_train, df_test, y_train, y_test)
+tuned(df_train, df_test, y_train, y_test)
