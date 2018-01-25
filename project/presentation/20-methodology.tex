@@ -1,9 +1,24 @@
+\begin{frame}{Methodology}
+	\begin{enumerate}
+		\item Literature research
+		\item Data exploration
+		\item Training
+		\item Evaluation
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Methodology: literature research}
+	\begin{enumerate}
+		\item[\textbf{[1]}] Friedman J. H. 2001. Greedy function approximation: a gradient boosting machine
+		\item[\textbf{[2]}] Anna Veronika Dorogush, Vasily Ershov, Andrey Gulin. 2017. CatBoost: gradient boosting with categorical features support
+	\end{enumerate}
+\end{frame}
+
 \begin{frame}{Methodology: literature research}
 	\textbf{CatBoost key features}
 	\begin{itemize}
 		\item Categorical features support
 		\item Novel gradient-boosting scheme
-		\item Fast and scalable GPU version
 	\end{itemize}
 \end{frame}
 
@@ -37,6 +52,7 @@
 	\begin{itemize}
 		% \item \textbf{Train / test split}: 80\% / 20\%
 		\item \textbf{Cross-validation}: 5-fold
+		\item \textbf{Grid-search}
 		\item \textbf{Metric}: RMSLE ($p_i$ --- predicted values, $a_i$ --- actual values)
 		$$ RMSLE = \sqrt[]{\frac{1}{N}\sum_{n = 1}^N (\log(p_i + 1) - \log(a_i + 1))^2} $$
 	\end{itemize}
