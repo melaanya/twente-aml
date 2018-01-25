@@ -15,17 +15,25 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.preprocessing import Imputer
 from sklearn import metrics
+from sklearn.datasets import load_boston
+
+import sys
+sys.path.insert(0, '../')
 import util
 import paramsearch
 from util import plot_top_features
 
 
-train = pd.read_csv('../data/Boston/boston-train.csv', index_col = 'ID', delimiter = ',')
-test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter = ',')
+# train = pd.read_csv('../data/Boston/boston-train.csv', index_col = 'ID', delimiter = ',')
+# test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter = ',')
 
-y_train = np.log1p(train.medv)
+dataset = load_boston()
+df_train = pd.DataFrame(dataset.data, columns=dataset.feature_names)
+y_train = np.log1p(dataset.target)
 
-df_train = train.drop(['medv'], axis = 1)
+# y_train = np.log1p(train.medv)
+
+# df_train = train.drop(['medv'], axis = 1)
 
 #df_train, df_test, y_train, y_test = train_test_split(dtrain, y_price, test_size = 0.2, shuffle = True)
 

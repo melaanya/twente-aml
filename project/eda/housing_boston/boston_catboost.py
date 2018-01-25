@@ -13,7 +13,7 @@ import pandas as pd
 import seaborn as sns
 import time
 
-from catboost import Pool, CatBoostRegressor, CatBoostClassifier, cv
+from catboost import Pool, CatBoostRegressor, cv
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.pylab import rcParams
 from sklearn.metrics import mean_squared_error

@@ -13,36 +13,32 @@ import time
 from sklearn.model_selection import cross_val_score, train_test_split, GridSearchCV
 from mlxtend.preprocessing import DenseTransformer
 from sklearn.pipeline import Pipeline
+from sklearn.datasets import load_boston
+
+import sys
+sys.path.insert(0, '../')
 import util
 import paramsearch
 from util import plot_top_features
 
 
-
 # import data
-train = pd.read_csv('../data/Boston/boston-train.csv', index_col = 'ID', delimiter = ',')
-test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter = ',')
+# train = pd.read_csv('../data/Boston/boston-train.csv', index_col = 'ID', delimiter = ',')
+# test = pd.read_csv('../data/Boston/boston-test.csv', index_col = 'ID', delimiter = ',')
 
-# =============================================================================
-# target = df_train['medv']
-# df_train = df_train.drop(['ID','medv'],axis=1)
-# 
-# df_test = df_test.drop(['ID'],axis=1)
-# 
-# 
-# xgtrain = xgb.DMatrix(df_train.values, target.values)
-# xgtest = xgb.DMatrix(df_test.values)
-# =============================================================================
+dataset = load_boston()
+df_train = pd.DataFrame(dataset.data, columns=dataset.feature_names)
+y_train = np.log1p(dataset.target)
 
-y_train = np.log1p(train.medv)
+# y_train = np.log1p(train.medv)
 
-df_train = train.drop(['medv'], axis = 1)
+# df_train = train.drop(['medv'], axis = 1)
 
 #df_train, df_test, y_train, y_test = train_test_split(dtrain, y_price, test_size = 0.2, shuffle = True)
 
 def defaultWithCatVars(df_train, y_train, n_folds=5, n_time=3):
 
-    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
+    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor())])
     xgboost_clf.fit(df_train, y_train)
     
     plot_top_features(xgboost_clf.named_steps['clf'], df_train.columns.values, 20)
@@ -86,7 +82,7 @@ def gridSearch(df_train, y_train, n_folds=5):
         'clf__learning_rate': [0.1, 0.05, 0.01],
         'clf__n_estimators' : [100, 500, 1000]
     }
-    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor(eval_metric = 'rmse'))])
+    xgboost_clf = Pipeline([('to_dense', DenseTransformer()), ('clf', xgb.XGBRegressor())])
     grid_search_xgb = GridSearchCV(xgboost_clf, grid_params, scoring='neg_mean_squared_error', cv=n_folds, verbose=False)
     grid_search_xgb.fit(df_train, y_train)
     
@@ -99,8 +95,7 @@ def gridSearch(df_train, y_train, n_folds=5):
     
 def tunedWithParams(best_parameters_xgb, df_train, y_train, n_time=3, n_folds=5):
     xgboost_clf = Pipeline([('to_dense', DenseTransformer()), 
-                        ('clf', xgb.XGBRegressor(eval_metric = 'rmse', 
-                                                 learning_rate = best_parameters_xgb['clf__learning_rate'], 
+                        ('clf', xgb.XGBRegressor(learning_rate = best_parameters_xgb['clf__learning_rate'], 
                                                  n_estimators = best_parameters_xgb['clf__n_estimators'],
                                                  max_depth = best_parameters_xgb['clf__max_depth']))])
 
