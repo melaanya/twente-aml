@@ -1,0 +1,47 @@
+\begin{frame}{Methodology}
+	outline
+\end{frame}
+
+\begin{frame}{Methodology: literature research}
+	\textbf{CatBoost key features}
+	\begin{itemize}
+		\item Categorical features support
+		\item Novel gradient-boosting scheme
+		\item Fast and scalable GPU version
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Methodology: data exploration}
+	\begin{table}
+		\centering
+		\resizebox{\linewidth}{!}{
+			\begin{tabular}{lrrr}
+				\toprule
+				\textbf{Dataset} & \textbf{Size} & \textbf{Features} & \textbf{Categorical Features} \\
+				\midrule
+				Sberbank Russian Housing Market dataset & 12231 & 293 & 18 \\
+				Ames Housing dataset & 1460 & 80 & 43 \\
+				Boston Housing dataset & 333 & 13 & 1 \\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{table}
+\end{frame}
+
+\begin{frame}{Methodology: training}
+	\begin{itemize}
+		\item \textbf{CatBoostRegressor}
+		\item OneHotEncoder + \textbf{XGBRegressor}
+		\item Imputer + OneHotEncoder + \textbf{GradientBoostingRegressor}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Methodology: evaluation}
+	\begin{itemize}
+		% \item \textbf{Train / test split}: 80\% / 20\%
+		\item \textbf{Cross-validation}: 5-fold
+		\item \textbf{Metric}: RMSLE ($p_i$ --- predicted values, $a_i$ --- actual values)
+		$$ RMSLE = \sqrt[]{\frac{1}{N}\sum_{n = 1}^N (\log(p_i + 1) - \log(a_i + 1))^2} $$
+	\end{itemize}
+\end{frame}
