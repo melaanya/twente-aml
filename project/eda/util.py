@@ -12,7 +12,7 @@ def plot_top_features(model, feature_names, num):
     top = sorted(zip(feature_names, model.feature_importances_),
                   key = lambda x: x[1], reverse = True)[:num]
     top = sorted(top, key = lambda x: x[1])
-    plot_top = zip(*top)
+    plot_top = list(zip(*top))
     plt.figure()
     plt.barh(range(0, len(plot_top[0])), plot_top[1], tick_label = plot_top[0])
     plt.title('Feature importance')
