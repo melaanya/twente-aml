@@ -18,4 +18,17 @@ Secondly, CatBoost suggests a principled way of mitigating the problem of biased
 
 \subsection{Training}
 
+In this project we examine the performance of three classifiers, namely GradientBoostingRegressor from scikit-learn, XGBoostRegressor from XGBoost and CatBoostRegressor from CatBoost. We assess the performance of these models in the field of housing price prediction by applying them on three different datasets without any preliminary feature selection as we do not opt for gaining the highest but for analyzing models conduct in the same conditions.
+
+In order to make use of GradientBoostingRegressor we first need to preprocess the data: for numerical columns we replace the missing values with the mean along each column whereas for categorical variables we perform one-hot encoding. Regarding XGBoostRegressor, we solely rely on its internal missing values treatment but repeat the procedure of binarizing the categorical variables. We do not adopt any additional feature preprocessing for CatBoostRegressor, only explicitly specify the categorical variables for its further internal processing. All the models are first trained with their default parameters which one can find in Appendix \cref{tab:default-parameters} and later tuned by employing the grid search over the predefined set of parameters which can be found in Appendix \cref{tab:grid-search-parameters}.
+
+\subsection{Evaluation}
+
+To evaluate the regression problem we employ the Root Mean Squared Logarithmic Error (RMSLE) as it equally penalizes the mismatches within small and huge values. Let $p_i$ be the predicted values and $a_i$ the actual values, then RMSLE is computed as follows:
+
+$$ RMSLE = \sqrt[]{\frac{1}{N}\sum_{n = 1}^N (\log(p_i + 1) - \log(a_i + 1))^2}. $$
+
+In order to assess the performance of the discussed algorithms and perform the grid search, we employ 5-fold cross validation. Throughout this research, the training speed is also of great interest for us, and thus, we measure the training time 3 times in a row and report the average of them.
+
+
 

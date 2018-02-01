@@ -1,3 +1,36 @@
 \appendix
 \section{Supplemental Materials}
 
+\begin{table}[htbp]
+	\centering
+	\resizebox{\linewidth}{!}{%
+		\begin{tabular}{crrr}
+			\toprule
+			\textbf{Model} & \textbf{Learning rate} & \textbf{Max estimator depth} & \textbf{Number of estimators}  \\ \midrule
+			 GradientBoostingRegressor & 0.03      & 6   &  500        \\
+			 XGBoostRegressor & 0.1      & 3   & 100     \\
+			 CatBoostRegressor    & 0.1      & 3   & 100     \\ \bottomrule
+		\end{tabular}
+	}
+	\caption{Default model parameters}
+	\label{tab:default-parameters}
+\end{table}
+
+
+
+\begin{table}[htbp]
+	\centering
+	\resizebox{0.45\linewidth}{!}{%
+		\begin{tabular}{lr}
+			\toprule
+			\textbf{Parameter} & \textbf{Parameter values} \\
+			\midrule
+			Learning rate & [0.1, 0.05, 0.01] \\
+			Max estimator depth & [1, 2, 3, 6] \\
+			Number of estimators & [100, 500, 1000] \\
+			\bottomrule
+		\end{tabular}
+	}
+	\caption{Grid search parameters}
+	\label{tab:grid-search-parameters}
+\end{table}
