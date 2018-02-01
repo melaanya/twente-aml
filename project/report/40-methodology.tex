@@ -1,2 +1,21 @@
 \section{Methodology}
 \label{sec:methodology}
+
+This section briefly explains the main differences of CatBoost library from the wide-spread industrial gradient boosting implementations such as scikit-learn and XGBoost. Furthermore, we discuss performed data preprocessing and the evaluating procedure.
+
+\subsection{Model}
+
+In our research we compare the performance of CatBoostRegressor from CatBoost library with other two existing publicly available implementations of gradient boosting algorithm for regression problems: GradientBoostingRegressor from scikit-learn and XGBoostRegressor from XGBoost. There are two fundamental key points which we consider remarkable in the CatBoost implementation.
+
+Firstly, it adopts an efficient strategy for handling categorical features in the data which is essentially substituting the category labels with some statistics computed per category with incorporated intention of prevented overfitting. To accomplish this, it performs a random permutation of the dataset and for each example it computes average label value for the example with the same category value placed before the given one in the permutation. 
+If we denote the permutation as $ \sigma = (\sigma_1, ..., \sigma_n)$, the feature vector as $ X_i = (x_{i, 1}, ..., x_{i, n})$, the label value as $Y_i$ and the prior value with its weight as $P$ and $a$ respectively then the statistics is computed by the following formula:
+
+$$ \frac{\sum_{j=1}^{p-1} [ x_{\sigma_j, i} = x_{\sigma_p, i}] Y_{\sigma_j} + a \cdot P}{\sum_{j=1}^{p-1} [ x_{\sigma_j, i} = x_{\sigma_p, i}] + a }. $$
+
+Adding the prior helps reducing the noise obtained from low-frequency categories. The standard technique for choosing the prior in regression problems is to take the average label value in the dataset.
+
+Secondly, CatBoost suggests a principled way of mitigating the problem of biased pointwise gradient estimates and proposes dynamic boosting approach that avoids the estimation bias at a minimal cost of the variance of the gradient estimation. Usually gradients on each iteration are assessed using the same data points which leads to a shift from actual distribution of gradients in any domain in the feature space. To overcome this problem, for each training instance a separate model is employed and it is never updated using the gradient estimate for this example. CatBoost implementation follows one relaxation of this idea which makes it feasible to employ: all these separate models share the same tree structures.
+
+\subsection{Training}
+
+
