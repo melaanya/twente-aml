@@ -1,2 +1,24 @@
 \section{Data}
 \label{sec:data}
+The datasets used in this project were all obtained from Kaggle. The selection of the datasets was motivated by the task of comparing three libraries. In order to meaningfully compare these libraries, the datasets needed to be different from each other in the following ways: 
+\begin{enumerate}
+\item Size: The dataset sizes are considerably different; Boston dataset being a small dataset, Ames being a medium dataset and Sberbank being the largest dataset.
+\item Number of features: The number of features of each dataset also differ substantially with Boston having the smallest number of features, followed by Ames and then Sberbank.
+\item Number of categorical features: Since CatBoost offers categorical features support, this was also an essential difference that needed to be incorporated into the datasets chosen.
+\end{enumerate}
+
+Table \ref{metadata} gives an overview of the differences in metadata between the three datasets. Out of the three datasets, the Sberbank dataset is the largest and the noisiest, and the Boston dataset is the smallest. The Ames dataset offers the most in terms of categorical variables with more than 50\% of it's features being categorical.
+
+
+\begin{table}[tbp]
+\centering
+\begin{tabular}{|l|r|r|r|}
+\hline
+Dataset  & Size  & Features & Categorical Features \\ \hline
+Boston   & 333   & 13       & 1                    \\ \hline
+Ames     & 1460  & 80       & 43                   \\ \hline
+Sberbank & 12231 & 293      & 18                   \\ \hline
+\end{tabular}
+\caption{Metadata}
+\label{metadata}
+\end{table}
