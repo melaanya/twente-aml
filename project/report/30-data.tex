@@ -1,24 +1,11 @@
 \section{Data}
 \label{sec:data}
-The datasets used in this project were all obtained from Kaggle. The selection of the datasets was motivated by the task of comparing three libraries. In order to meaningfully compare these libraries, the datasets needed to be different from each other in the following ways: 
-\begin{enumerate}
-\item Size: The dataset sizes are considerably different; Boston dataset being a small dataset, Ames being a medium dataset and Sberbank being the largest dataset.
-\item Number of features: The number of features of each dataset also differ substantially with Boston having the smallest number of features, followed by Ames and then Sberbank.
-\item Number of categorical features: Since CatBoost offers categorical features support, this was also an essential difference that needed to be incorporated into the datasets chosen.
-\end{enumerate}
+Throughout this project we make use of three datasets for housing price prediction publicly available from Kaggle competitions. We choose them under assumption that testing the GBDT models on various datasets with distinctive properties is important for reasoning about their performance in housing price prediction area. 
 
-Table \ref{metadata} gives an overview of the differences in metadata between the three datasets. Out of the three datasets, the Sberbank dataset is the largest and the noisiest, and the Boston dataset is the smallest. The Ames dataset offers the most in terms of categorical variables with more than 50\% of it's features being categorical.
+The first dataset we utilize is a classic but tiny Boston dataset \cite{boston1978housing} collected in 70's which encloses 333 instances described by 13 features, only one of which is categorical in itself. Despite the modest size this dataset can still be employed as a rapid and reasonable initial step towards understanding of model's performance in regression problems.
 
+We also adopt the Ames housing dataset \cite{de2011ames} incorporating 1460 observations and 80 explanatory variables involved in assessing home price: 43 categorical and 37 ordinal and continuous. It describes the sale of individual residential property in Ames, Iowa from 2006 to 2010 and includes much greater variety of information than the Boston dataset.
 
-\begin{table}[tbp]
-\centering
-\begin{tabular}{|l|r|r|r|}
-\hline
-Dataset  & Size  & Features & Categorical Features \\ \hline
-Boston   & 333   & 13       & 1                    \\ \hline
-Ames     & 1460  & 80       & 43                   \\ \hline
-Sberbank & 12231 & 293      & 18                   \\ \hline
-\end{tabular}
-\caption{Metadata}
-\label{metadata}
-\end{table}
+The third dataset is provided by Russian bank Sberbank \cite{sberbank2017housing} and not only includes housing specifications but also comprises macroeconomic patterns. It contains 12231 training instances each of which is represented by 293 parameters with 18 categorical among them. This dataset is the most diverse among all the considered datasets which imposes an additional challenge to the models.
+
+Comparative analysis shows that the Ames housing dataset offers the greatest variety of categorical features which are of the most interest taking into account specific CatBoost treatment towards them. The Sberbank dataset seems to be the most appealing in the sense of being true to life as it is mostly collected in the wild which, on the other hand, makes it more noisy, and therefore, more demanding for model training.
