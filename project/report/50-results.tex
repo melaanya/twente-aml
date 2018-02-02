@@ -1,2 +1,58 @@
 \section{Results}
 \label{sec:results}
+The performance results of the three libraries on each dataset is described on two fronts: Default and Tuned. These refer to the performance of each model using the default hyperparameters\cref{tab:default-parameters} and the performance after tuning these parameters using grid search\cref{tab:grid-search-parameters}. Another important metric discussed is the time taken for training for each model on each dataset. While the evaluation metric for the three libraries seem to be within similar ranges, the training time taken stands out.
+
+\subsection{Boston Dataset}
+The RMSLE value of the three libraries on the smallest of the datasets shows CatBoost slightly outperforming XGBoost and sklearn GB with both the default and the tuned models. However, this slight advantage gained in performance comes at the cost of training time taken. XGBoost is approximately 75 times faster than CatBoost and sklearn GB is 52 times faster than CatBoost. Table \cref{tab:boston_results} shows the results for the Boston dataset.
+
+\begin{table}
+				\centering
+				\begin{tabular}{lrrr}
+					\toprule
+					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time in seconds(tuned)} \\
+					\midrule
+					CatBoost & \textbf{0.1584} &  \textbf{0.1423}  & 56.33 \\
+					XGBoost & 0.1952 & 0.1753 & \textbf{0.75}\\
+					sklearn GB & 0.1993 & 0.1721 & 1.07 \\
+					\bottomrule
+				\end{tabular}
+                \caption{Results on the Boston dataset}
+				\label{tab:boston_results}
+			\end{table}
+
+\subsection{Ames Dataset}
+For the Ames dataset, we see that sklearn GB and XGBoost perform comparably well with CatBoost lagging behind slightly for both the default and tuned models. The difference in training speed is evident here as well, with  
+XGBoost and sklearn GB being six and five times faster than CatBoost respectively.\textbf{ However, it is interesting to note that while XGBoost and sklearn GB take more time than they did on the Boston dataset, CatBoost only takes two seconds longer than it did on the Boston Dataset.(Could this be due to Ames having more categorical variables, which made it faster than it should have been?) 	JUST AN OBSERVATION. I COULD BE DEAD WRONG ABOUT THIS.} Table \cref{tab:ames_results} shows the results for the Boston dataset.
+
+\begin{table}
+				\centering
+				\begin{tabular}{lrrr}
+					\toprule
+					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time in seconds(tuned)} \\
+					\midrule
+					CatBoost & 0.1789 &  0.1435  & 58.82\\
+					XGBoost & 0.1315 & 0.1246 & \textbf{8.72} \\
+					sklearn GB & \textbf{0.1285} & \textbf{0.1241} & 10.10 \\
+					\bottomrule
+				\end{tabular}
+                \caption{Results on the Ames dataset}
+				\label{tab:ames_results}
+			\end{table}
+
+\subsection{Sberbank Dataset}
+On the largest of the datasets chosen, we see that the performance is again similar for both the default as well as the tuned models. Again, as with the other datasets, CatBoost is slower than XGBoost by a factor of four and slower than sklearn GB by a factor of five. Table \cref{tab:sberbank_results} shows the results for the Boston dataset.
+
+\begin{table}
+				\centering
+				\begin{tabular}{lrrr}
+					\toprule
+					\textbf{Model} & \textbf{Default} & \textbf{Tuned} & \textbf{Mean time in seconds(tuned)} \\
+					\midrule
+					CatBoost & 0.5161 &  0.5102  & 765.91 \\
+					XGBoost & \textbf{0.5098} & \textbf{0.5081} & 158.67 \\
+					sklearn GB & 0.5102 & 0.5091 & \textbf{148.41} \\
+					\bottomrule
+				\end{tabular}
+                \caption{Results on the Sberbank dataset}
+				\label{tab:sberbank_results}
+			\end{table}
