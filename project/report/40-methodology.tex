@@ -7,7 +7,7 @@ This section briefly explains the main differences of CatBoost model from the wi
 
 In our research we compare the performance of CatBoostRegressor from CatBoost library with other two existing publicly available implementations of gradient boosting algorithm for regression problems: GradientBoostingRegressor from scikit-learn and XGBoostRegressor from XGBoost. There are two fundamental key points which we consider remarkable in the CatBoost implementation: categorical feature processing and tackling the problem of bias in gradient estimations. 
 
-Regarding the categorical features, CatBoost adopts an efficient strategy for handling them in the data which is essentially substituting the category labels with some statistics computed per category with incorporated intention of overfitting prevention. To accomplish this, it performs a random permutation of the dataset and for each example it computes average label value for the example with the same category value placed before the given one in the permutation. 
+Regarding the categorical features, CatBoost adopts an efficient strategy for handling them in the data which is essentially the substitution of the category labels with some statistics computed per category with incorporated intention of overfitting prevention. To accomplish this, the algorithm performs a random permutation of the dataset and for each example it computes average label value for the example with the same category value placed before the given one in the permutation. 
 If we denote the permutation as $ \sigma = (\sigma_1, ..., \sigma_n)$, the feature vector as $ X_i = (x_{i, 1}, ..., x_{i, n})$, the label value as $Y_i$ and the prior value with its weight as $P$ and $a$ $(a > 0)$ respectively then the statistics is computed by the following formula:
 
 $$ \frac{\sum_{j=1}^{p-1} [ x_{\sigma_j, i} = x_{\sigma_p, i}] Y_{\sigma_j} + a \cdot P}{\sum_{j=1}^{p-1} [ x_{\sigma_j, i} = x_{\sigma_p, i}] + a }. $$
@@ -28,7 +28,7 @@ To evaluate the regression problem we employ the Root Mean Squared Logarithmic E
 
 $$ RMSLE = \sqrt[]{\frac{1}{N}\sum_{n = 1}^N (\log(p_i + 1) - \log(a_i + 1))^2}. $$
 
-In order to assess the performance of the discussed algorithms and execute the grid search over the predefined set of parameters, we employ 5-fold cross validation. Throughout this research, the training time is also of great interest for us, and thus, we measure it 3 times in a row and report the average.
+In order to assess the performance of the discussed algorithms and execute the grid search over the predefined set of parameters, we adopt 5-fold cross validation. Throughout this research, the training time is also of great interest for us, and thus, we measure it 3 times in a row and report the average.
 
 
 
