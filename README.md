@@ -37,6 +37,6 @@ We compare the CatBoost performance with the performance of two other state-of-t
 |  sklearn GB   |   0.1993    |   0.1721   |                                  2, 1000, 0.01    |         1.07     |
 
 
-## Conclusions
+## Conclusion
 
 CatBoost outperforms two models only on Boston dataset with the smallest number of both features and training instances while still conceding to other models in more realistic Ames and Sberbank datasets. Further analysis shows CatBoost's apparent preference towards the categorical variables when building the estimators which does not always result in score improvements.
